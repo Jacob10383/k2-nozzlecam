@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/sh
 
 set -e
 
@@ -24,7 +24,7 @@ fi
 ln -sf "${SCRIPT_DIR}/60-v4l" /etc/hotplug.d/usb/60-v4l
 
 # symlink the ustreamer binary into /usr/bin
-ln -sf "${SCRIPT_DIR}/ustreamer_static_arm32" /usr/bin/ustreamer
+ln -sf "${SCRIPT_DIR}/ustreamer" /usr/bin/ustreamer
 chmod 755 /usr/bin/ustreamer
 
 # adds gcode_shell_command to klipper
@@ -33,7 +33,7 @@ ln -sf "${SCRIPT_DIR}/gcode_shell_command.py" /usr/share/klipper/klippy/extras/g
 # copy the v4lctls.cfg to /mnt/UDISK/printer_data/config/custom/v4lctls.cfg
 cp -f "${SCRIPT_DIR}/v4lctls.cfg" /mnt/UDISK/printer_data/config/custom/v4lctls.cfg
 # add the macro into the printer.cfg file
-python ${SCRIPT_DIR}/ensure_included.py \
+python "${SCRIPT_DIR}/ensure_included.py" \
     ~/printer_data/config/custom/main.cfg v4lctls.cfg
 
 echo "Installation complete. reboot the system to apply changes."
