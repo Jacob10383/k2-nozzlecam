@@ -1,66 +1,37 @@
 #!/usr/bin/env python3
 
-import os
 import sys
+import os
 
-def add_include(config_path, include_path, commented=False):
-    """
-    Add an include statement to a configuration file if it doesn't exist.
+if len(sys.argv) < 3:
+    print("Usage: python ensure_included.py <target_cfg> <include_file> [--remove]")
+    sys.exit(1)
 
-    Args:
-        config_path (str): Full path to the configuration file
-        include_path (str): Path to be included
-        commented (bool): Whether to comment out the include (default: False)
-    """
-    target = f"[include {include_path}]"
-    if commented:
-        target = f"#{target}"
+target_path = os.path.expanduser(sys.argv[1])
+include_file = sys.argv[2]
+include_line = f"[include {include_file}]"
+remove_mode = "--remove" in sys.argv
 
-    # Create the directory path if it doesn't exist
-    os.makedirs(os.path.dirname(config_path), exist_ok=True)
+if os.path.exists(target_path):
+    with open(target_path, "r") as f:
+        lines = f.readlines()
+else:
+    lines = []
 
-    # If file doesn't exist, create it with the include
-    if not os.path.exists(config_path):
-        with open(config_path, 'w') as handle:
-            handle.write(target + '\n')
-        return
-
-    update_needed = True
-    insert_before = False
-
-    with open(config_path, 'r') as handle:
-        contents = handle.readlines()
-
-        for line in contents:
-            if line.strip() == target:
-                update_needed = False
-                break
-            if line.startswith('#*#'):
-                insert_before = True
-                break
-            if line.startswith('[include overrides.cfg]'):
-                insert_before = True
-                break
-
-    if update_needed:
-        if insert_before:
-            contents.insert(contents.index(line), target + '\n')
-        else:
-            contents.append(target + '\n')
-        with open(config_path, 'w') as handle:
-            handle.writelines(contents)
-
-
-def remove_include(config_path, remove_path):
-    pass
-
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: script.py <config_path> <include_path> [commented]")
-        sys.exit(1)
-
-    config_path = os.path.expanduser(sys.argv[1])
-    include_path = os.path.expanduser(sys.argv[2])
-    commented = bool(sys.argv[3]) if len(sys.argv) > 3 else False
-
-    add_include(config_path, include_path, commented)
+if remove_mode:
+    # Filter out the include line
+    new_lines = [line for line in lines if line.strip() != include_line]
+    if len(lines) != len(new_lines):
+        with open(target_path, "w") as f:
+            f.writelines(new_lines)
+        print(f"Removed {include_line} from {target_path}")
+    else:
+        print(f"{include_line} was not found.")
+else:
+    # Standard add logic
+    if not any(line.strip() == include_line for line in lines):
+        with open(target_path, "a") as f:
+            f.write(f"\n{include_line}\n")
+        print(f"Added {include_line} to {target_path}")
+    else:
+        print(f"{include_line} is already included.")
