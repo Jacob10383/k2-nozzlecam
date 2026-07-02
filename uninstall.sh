@@ -18,18 +18,11 @@ if [ -e /etc/hotplug.d/usb/60-v4l.bak ] && [ -e /etc/hotplug.d/usb/60-v4l ]; the
 fi
 
 # remove the old symlinks
-rm -rf /usr/bin/ustreamer_static_arm32
-rm -rf /usr/bin/start_recording.sh
-rm -rf /usr/bin/stop_recording.sh
-rm -rf /mnt/UDISK/printer_data/config/camera_macro.cfg
+rm -rf /usr/bin/ustreamer
 rm -rf /usr/share/klipper/klippy/extras/gcode_shell_command.py
 
 # remove the v4lctls macro file
 python ${SCRIPT_DIR}/ensure_included.py \
     ~/printer_data/config/custom/main.cfg v4lctls.cfg --remove
-
-echo "PLEASE NOTE"
-echo "The only remaining changes to remove are within your printer.cfg file for the [include camera_macro.cfg] section."
-echo "You can leave the changes if you like, the commands will harmlessly error out if called without the supporting files"
 
 echo "Uninstallation complete. reboot the system to apply changes."
