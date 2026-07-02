@@ -24,6 +24,10 @@ rm -rf /usr/bin/stop_recording.sh
 rm -rf /mnt/UDISK/printer_data/config/camera_macro.cfg
 rm -rf /usr/share/klipper/klippy/extras/gcode_shell_command.py
 
+# remove the v4lctls macro file
+python ${SCRIPT_DIR}/ensure_included.py \
+    ~/printer_data/config/custom/main.cfg v4lctls.cfg --remove
+
 echo "PLEASE NOTE"
 echo "The only remaining changes to remove are within your printer.cfg file for the [include camera_macro.cfg] section."
 echo "You can leave the changes if you like, the commands will harmlessly error out if called without the supporting files"
