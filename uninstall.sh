@@ -2,6 +2,8 @@
 
 set -e
 
+SCRIPT_DIR="$(readlink -f $(dirname $0))"
+
 # return original auto_uvc if backup exists
 if [ -e /usr/bin/auto_uvc.sh.bak ] && [ -e /usr/bin/auto_uvc.sh ]; then
     rm -rf /usr/bin/auto_uvc.sh
