@@ -1,4 +1,3 @@
-# I go in /etc/hotplug.d/usb/
 [ "$ACTION" = "bind" ] && [ "$INTERFACE" = "14/1/0" ] && {
 
     mkdir -p /dev/v4l/by-id
@@ -14,7 +13,7 @@
                 echo /dev/v4l/by-id/main-$node > /tmp/.video_$DEVICENAME
                 MDEV=main-$node ACTION=add /usr/bin/auto_uvc.sh &
 
-            # 2. Auxiliary Camera Detection (MJPG -> mapped directly to $node, e.g. video0)
+            # 2. Auxiliary Camera Detection (MJPG -> mapped directly to $node, e.g. video2)
             elif [ $(v4l2-ctl -d /dev/$node --list-framesizes MJPG 2>&1 | wc -l) -gt 1 ]; then
                 logger -t uvc "$node supports MJPG format! Mapping directly to $node."
                 ln -s /dev/$node /dev/v4l/by-id/$node
