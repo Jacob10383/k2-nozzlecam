@@ -24,6 +24,10 @@ rm -rf /usr/bin/ustreamer
 rm -rf /mnt/UDISK/printer_data/config/custom/v4lctls.cfg
 rm -rf /usr/share/klipper/klippy/extras/gcode_shell_command.py
 
+#remove the init.d ustream script and config folder
+rm -rf /etc/ustreamer
+rm -rf /etc/init.d/ustreamer
+
 # remove the v4lctls macro file
 python ${SCRIPT_DIR}/ensure_included.py \
     ~/printer_data/config/custom/main.cfg v4lctls.cfg --remove
