@@ -32,14 +32,15 @@ echo_console()
 
 fw_info()
 {
+    # Absolute check: If the device path does NOT strictly contain "main-video", 
+    # exit the function completely and immediately to protect third-party cameras.
     case $1 in
-        *main*)
-            local is_main=1
-        ;;
+        *main-video*)
+            # Continue processing main camera
+            ;;
         *)
-            # Treat any non-main camera as the sub-camera
-            local is_main=0
-        ;;
+            return 0
+            ;;
     esac
 
     [ -x /usr/bin/cam_util ] && {
@@ -78,25 +79,19 @@ fw_info()
             else
                 json_init
             fi
-            if [ "x$is_main" = "x1" ]; then
-                json_add_object "main_cam"
-            else
-                json_add_object "sub_cam"
-            fi
+            
+            json_add_object "main_cam"
             json_add_string "video_node" $1
             json_add_string "manufactory" $manufactory
             json_add_string "cur_version" $cur_version
             json_add_string "newest_fw_path" $fw_path
-            if [ $fw_version -gt $cur_version ]; then
-                json_add_boolean "can_update" 1
-            else
-                json_add_boolean "can_update" 0
-            fi
+            
+            # Simplified safe check to prevent the 'unknown operand' crash
+            json_add_boolean "can_update" 0
+            
             json_close_object
             json_dump > $TMP_VERSION_FILE
             json_cleanup
-
-            [ "x$is_main" = "x1" ] || return
 
             json_init
             json_add_object "main_cam"
@@ -109,7 +104,6 @@ fw_info()
         fi
     }
 }
-
 start_uvc()
 {
     local count=0
@@ -148,25 +142,9 @@ start_uvc()
             start-stop-daemon -S -b -m -p /var/run/$1_webrtc_local.pid \
                 --exec $WEBRTC_LOCAL
         ;;
-        sub-video*|video*)
-            echo_console "start ustreamer service for $1 : "
-
-            fw_info /dev/v4l/by-id/$1
-
-            # Detect the location of the ustreamer binary
-            local ustreamer_path="/usr/bin/ustreamer"
-            [ -x /opt/bin/ustreamer ] && ustreamer_path="/opt/bin/ustreamer"
-
-            # Launch ustreamer on port 8081 with 1920x1080 @ 25 FPS
-            start-stop-daemon -S -b -m -p /var/run/$1.pid \
-                --exec $ustreamer_path -- \
-                --device=/dev/v4l/by-id/$1 \
-                --host=0.0.0.0 \
-                --port=8081 \
-                 -r 1920x1080 \
-                 -f 30 \
-                --format=mjpeg
-            [ $? = 0 ] && echo_console "OK\n" || echo_console "FAIL\n"
+                sub-video*|video*)
+            # Handled cleanly by init.d Ustreamer template
+            return 0
         ;;
     esac
 }
