@@ -1,0 +1,67 @@
+#!/bin/sh /etc/rc.common
+
+# OpenWrt Boot Order Configuration
+START=99
+STOP=10
+
+USE_PROCD=1
+CONFIG_FILE="/etc/ustreamer/cameras.conf"
+
+# Master Template Spawning Routine
+start_instance() {
+    local suffix="$1"
+    
+    # Dynamically resolve values based on the suffix variable
+    eval enabled=\$ENABLED_${suffix}
+    eval device=\$DEVICE_${suffix}
+    eval port=\$PORT_${suffix}
+    eval res=\$RES_${suffix}
+    eval fps=\$FPS_${suffix}
+    eval expo_auto=\$EXPO_AUTO_${suffix}
+    eval expo_abs=\$EXPO_ABS_${suffix}     # <-- Resolves manual exposure value
+
+    # Exit early if this instance is disabled or empty
+    if [ "x$enabled" != "x1" ] || [ -z "$device" ]; then
+        return 0
+    fi
+
+    # Securely apply v4l2-ctl custom values using the explicit path
+    if [ -c "$device" ] || [ -b "$device" ]; then
+        # Apply auto exposure mode if set
+        if [ -n "$expo_auto" ]; then
+            /usr/bin/v4l2-ctl -d "$device" --set-ctrl=exposure_auto="$expo_auto" >/dev/null 2>&1
+        fi
+        # Apply absolute exposure duration if set
+        if [ -n "$expo_abs" ]; then
+            /usr/bin/v4l2-ctl -d "$device" --set-ctrl=exposure_absolute="$expo_abs" >/dev/null 2>&1
+        fi
+    fi
+
+    # Detect the correct ustreamer path on CrealityOS
+    local ustreamer_path="/usr/bin/ustreamer"
+    [ -x /opt/bin/ustreamer ] && ustreamer_path="/opt/bin/ustreamer"
+
+    # Tell procd to track and manage this instance as a separate background process
+    procd_open_instance "ustreamer_${suffix}"
+    procd_set_param command "$ustreamer_path" \
+        --device="$device" \
+        --host=0.0.0.0 \
+        --port="$port" \
+        --format=mjpeg \
+        --resolution="$res" \
+        --desired-fps="$fps" \
+        --workers=2 \
+        --allow-origin="*"
+    procd_set_param respawn
+    procd_close_instance
+}
+
+start_service() {
+    if [ -f "$CONFIG_FILE" ]; then
+        . "$CONFIG_FILE"
+        
+        # Loop through and explicitly start every instance profile you define
+        start_instance "nozzle"
+        start_instance "bed"
+    fi
+}
