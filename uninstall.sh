@@ -21,8 +21,10 @@ fi
 
 # remove the old symlinks
 rm -rf /usr/bin/ustreamer
-rm -rf /mnt/UDISK/printer_data/config/custom/v4lctls.cfg
 rm -rf /usr/share/klipper/klippy/extras/gcode_shell_command.py
+
+#remove the v4lctls.cfg file
+rm -rf /mnt/UDISK/printer_data/config/custom/v4lctls.cfg
 
 #remove the init.d ustream script and config folder
 rm -rf /etc/ustreamer
