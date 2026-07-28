@@ -4,6 +4,7 @@ This is my first attempt at doing a fork ever, from the k2 extruder nozzle-cam p
 ## Installation
 
 Run `sh ./setup.sh` to install
+
 Run `sh ./uninstaller.sh` to uninstall
 
 Below you will find a modified readme of the 3DO Nozzle Camera provided by 3DO's github.
