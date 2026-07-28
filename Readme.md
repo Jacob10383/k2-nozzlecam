@@ -3,16 +3,16 @@
 This is my first attempt at doing a fork ever, from the k2 extruder nozzle-cam project, Everyone is welcome to improve, add or fix anything wrong in it. Work in progress.
 ## Installation
 
-Run `sh ./install.sh` to drag all the required files over
-Simple as that.
+Run `sh ./setup.sh` to install
+Run `sh ./uninstaller.sh` to uninstall
 
 Below you will find a modified readme of the 3DO Nozzle Camera provided by 3DO's github.
 Feel free to refer to the User Controls section for command functionality.
 Results may vary depending on hardware installation, you will likely end up experimenting with different `set-ctrls` parameters set to your liking.
 I'll be providing my commands used here for reference until such time as a front-end UI can me made to control the camera without touching the commandline.
 
-- Use `v4l2-ctl --device=/dev/video0 --list-ctrls` to view the available commands, and their current set values.
-- Use `v4l2-ctl --devicve=/dev/video0 -set-ctrl
+- Use `v4l2-ctl --device=/dev/video2 --list-ctrls` to view the available commands, and their current set values.
+- Use `v4l2-ctl --devicve=/dev/video2 -set-ctrl
 
 ## FPC Cable Options
 - 5cm - Needs LED's
@@ -80,5 +80,6 @@ _**Tested for 48hrs without issue, use with caution._
 
 ### Credits
 
+Jacobean @Jacob10383 for all the help and his awesome firmware.
 James Campbell - Original creator of the nozzle cam project.
 Jamin Collins - Ensure-Encluded.py
