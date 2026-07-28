@@ -27,7 +27,7 @@ rm -f /mnt/UDISK/printer_data/config/custom/v4lctls.cfg
 rm -rf /etc/ustreamer
 rm -f /etc/init.d/ustreamer
 
-# remove the v4lctls macro file alignment
+# remove the v4lctls gcode macro line from main.cfg
 python "${SCRIPT_DIR}/ensure_included.py" \
     ~/printer_data/config/custom/main.cfg v4lctls.cfg --remove
 
