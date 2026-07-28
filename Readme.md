@@ -6,7 +6,7 @@ This is my first attempt at doing a fork ever, from the k2 extruder nozzle-cam p
 Find your printer IP number
 SSH to your printer
 
-Replace "<printer-ip>" with your printer IP and run the installer with the following command:
+Replace <printer-ip> with your printer IP and run the installer with the following command:
 
 ```
 wget https://github.com/Jimmy8881/k2-nozzlecam/archive/refs/heads/main.zip && unzip main.zip && cd k2-nozzlecam-main && chmod +x uninstaller.sh && chmod +x setup.sh && ./setup.sh -- <printer-ip>
