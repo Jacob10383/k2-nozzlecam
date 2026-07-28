@@ -15,6 +15,6 @@ systemctl enable ustreamer@3docam
 
 # add the macro into the printer.cfg file
 python "${SCRIPT_DIR}/ensure_included.py" \
-    ~/printer_data/config/overrides.cfg v4lctls.cfg
+    ~/printer_data/config/overrides.cfg 3dov4lctls.cfg
 
 echo "Installation complete. reboot klipper to load the new 3DO camera control macros."
