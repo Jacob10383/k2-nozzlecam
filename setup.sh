@@ -5,7 +5,7 @@ set -e
 SCRIPT_DIR="$(readlink -f "$(dirname "$0")")"
 
 echo "============================================="
-echo "       3DoCam Installation Manager           "
+echo "              3DoCam Installer               "
 echo "============================================="
 echo "Please select an installation profile:"
 echo "1) Standard Creality Firmware Installation (install.sh)"
