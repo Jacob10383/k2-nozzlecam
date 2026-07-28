@@ -13,7 +13,7 @@ systemctl start ustreamer@3docam
 # Enable the service to start automatically on system boot
 systemctl enable ustreamer@3docam
 
-# add the macro into the printer.cfg file
+# add the macro 3dov4lctls.cfg into the printer.cfg file
 python "${SCRIPT_DIR}/ensure_included.py" \
     ~/printer_data/config/overrides.cfg 3dov4lctls.cfg
 
