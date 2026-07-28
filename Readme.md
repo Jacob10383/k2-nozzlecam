@@ -7,7 +7,10 @@ Find your printer IP number
 SSH to your printer
 
 Replace <printer-ip> with your printer IP and run the installer with the following command:
-```wget -qO- https://raw.githubusercontent.com/Jimmy8881/k2-nozzlecam/refs/heads/main/setup.sh | sh -s -- <printer-ip>```
+
+```
+wget -qO- https://raw.githubusercontent.com/Jimmy8881/k2-nozzlecam/refs/heads/main/setup.sh | sh -s -- <printer-ip>
+```
 
 Run `sh ./uninstaller.sh` to uninstall
 
@@ -17,7 +20,7 @@ Results may vary depending on hardware installation, you will likely end up expe
 The installer will add Macros to control the 3d0 camera from the Fluidd interface, (LED,exposure, brightness, etc..)
 
 - Use `v4l2-ctl --device=/dev/video2 --list-ctrls` to view the available commands, and their current set values or use the macro button CAM_SETTINGS from Fluidd
-- Use `v4l2-ctl --devicve=/dev/video2 -set-ctrl
+- Use `v4l2-ctl --devicve=/dev/video2 -set-ctrl`
 
 ## FPC Cable Options
 - 5cm - Needs LED's
