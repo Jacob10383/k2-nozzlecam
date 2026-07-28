@@ -12,7 +12,14 @@ Replace <printer-ip> with your printer IP and run the installer with the followi
 wget https://github.com/Jimmy8881/k2-nozzlecam/archive/refs/heads/main.zip && unzip main.zip && cd k2-nozzlecam-main && chmod +x setup.sh && ./setup.sh -- <printer-ip>
 ```
 ## Uninstall
-Run `sh ./uninstaller.sh` to uninstall
+
+SSH to your printer, run
+
+`cd /mnt/UDISK/k2-nozzlecam-main`
+
+and then run
+
+`sh ./uninstaller.sh` to uninstall
 
 Below you will find a modified readme of the 3DO Nozzle Camera provided by 3DO's github.
 Feel free to refer to the User Controls section for command functionality.
