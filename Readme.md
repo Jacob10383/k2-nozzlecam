@@ -82,5 +82,7 @@ _**Tested for 48hrs without issue, use with caution._
 ### Credits
 
 Jacobean @Jacob10383 for all the help and his awesome firmware.
+
 James Campbell - Original creator of the nozzle cam project.
+
 Jamin Collins - Ensure-Encluded.py
