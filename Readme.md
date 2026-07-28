@@ -10,9 +10,9 @@ Run `sh ./uninstaller.sh` to uninstall
 Below you will find a modified readme of the 3DO Nozzle Camera provided by 3DO's github.
 Feel free to refer to the User Controls section for command functionality.
 Results may vary depending on hardware installation, you will likely end up experimenting with different `set-ctrls` parameters set to your liking.
-I'll be providing my commands used here for reference until such time as a front-end UI can me made to control the camera without touching the commandline.
+The installer will add Macros to control the 3d0 camera from the Fluidd interface, (LED,exposure, brightness, etc..)
 
-- Use `v4l2-ctl --device=/dev/video2 --list-ctrls` to view the available commands, and their current set values.
+- Use `v4l2-ctl --device=/dev/video2 --list-ctrls` to view the available commands, and their current set values or use the macro button CAM_SETTINGS from Fluidd
 - Use `v4l2-ctl --devicve=/dev/video2 -set-ctrl
 
 ## FPC Cable Options
@@ -76,7 +76,7 @@ _**Tested for 48hrs without issue, use with caution._
 
 - `exposure_time_absolute` controls the shutter speed and can only be set when `auto_exposure` is in manual mode.
 
-- PTZ controls (`pan_absolute`, `tilt_absolute`, `zoom_absolute`) are used to crop the image. All 30fps streams are downscaled to 4K, and all 60fps streams are downscaled to 1080p. To use the crop feature, you need to select a downscaled stream.
+- PTZ controls (`pan_absolute`, `tilt_absolute`, `zoom_absolute`) are used to crop the image. All 30fps streams are downscaled to 4K, and all 60fps streams are downscaled to 1080p. To use the crop feature, you need to select a downscaled stream. Note: zoom is enabled, i have pan and tilt disabled for further testing.
 
 
 ### Credits
