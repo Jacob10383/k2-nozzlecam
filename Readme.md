@@ -9,7 +9,7 @@ SSH to your printer
 Replace `<printer-ip>` with your printer IP and run the installer with the following command:
 
 ```
-wget https://github.com/Jimmy8881/k2-nozzlecam/archive/refs/heads/main.zip && unzip main.zip && cd k2-nozzlecam-main && chmod +x uninstaller.sh && chmod +x setup.sh && ./setup.sh -- <printer-ip>
+wget https://github.com/Jimmy8881/k2-nozzlecam/archive/refs/heads/main.zip && unzip main.zip && cd k2-nozzlecam-main && chmod +x uninstaller.sh && chmod +x setup.sh && ./setup.sh -- <printer-ip> && rm ../main.zip
 ```
 ## Uninstall
 
